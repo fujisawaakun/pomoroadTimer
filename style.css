@@ -1,0 +1,50 @@
+@charset "utf-8";
+
+body {
+  margin: 0;
+  background-image: url(img/istockphoto-1156297861-2048x2048.jpg);
+  background-size: cover;
+}
+
+main {
+  width: 100%;
+}
+
+#setting-icon {
+  fill: rgba(255, 255, 255, 0.9);
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+#timer {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+
+  color: #fff;
+  font-size: 36px;
+  letter-spacing: 4px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  margin: 40px 24px;
+}
+
+section#setting {
+  background: #fff;
+  width: 320px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.hidden {
+  display: none;
+}
