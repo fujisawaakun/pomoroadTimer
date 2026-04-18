@@ -4,22 +4,59 @@ body {
   margin: 0;
   background-image: url(img/istockphoto-1156297861-2048x2048.jpg);
   background-size: cover;
+  background-position: center;
+  min-height: 100vh;
 }
 
 main {
   width: 100%;
+  position: relative;
 }
 
 #setting-icon {
-  fill: rgba(255, 255, 255, 0.9);
+  /* fill: rgba(255, 255, 255, 0.9); */
   position: absolute;
   top: 0;
-  right: 0;
+  right: 24px;
+}
+
+.timer-wrapper {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  margin: 24px;
+}
+
+.ring {
+  width: 220px;
+  height: 220px;
+  transform: rotate(-90deg);
+}
+
+.ring-bg,
+.ring-progress {
+  fill: none;
+  stroke-width: 10;
+}
+
+.ring-bg {
+  stroke: rgba(255, 255, 255, 0.25);
+}
+
+.ring-progress {
+  stroke: #fff;
+  stroke-linecap: round;
 }
 
 #timer {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
   width: 200px;
   height: 200px;
+  margin: 0;
   border-radius: 50%;
 
   background: rgba(255, 255, 255, 0.2);
@@ -32,8 +69,6 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-
-  margin: 40px 24px;
 }
 
 section#setting {
