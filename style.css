@@ -18,6 +18,7 @@ main {
   position: absolute;
   top: 0;
   right: 24px;
+  cursor: pointer;
 }
 
 .timer-wrapper {
@@ -71,15 +72,44 @@ main {
   align-items: center;
 }
 
-section#setting {
+
+/* -----設定画面----- */
+section#setting-display {
   background: #fff;
   width: 320px;
   height: 100%;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
+  padding: 12px;
 }
 
-.hidden {
-  display: none;
+#setting-timer {
+  display: flex;
+  justify-content: space-between;
 }
+
+input[type="number"]::-webkit-outer-spin-button, 
+input[type="number"]::-webkit-inner-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} 
+
+.setting-timer,input {
+  all: unset;
+  width: 100%;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin: 0 8px;
+  padding: 0 8px;
+  text-align: right;
+  font-size: 20px;
+}
+
+
+
+
+
+/* #setting-display.hidden {
+  display: none;
+} */

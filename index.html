@@ -27,12 +27,17 @@
       </svg>
 
       <p id="timer">0:00:00</p>
+      <button id="start">start</button>
     </div>
     <img src="setting-icon.svg" id="setting-icon" alt="歯車" width="48px" height="48px">
 
     <!-- 設定画面 -->
-    <section class="hidden" id="setting">
-      <p>いったん後で考える</p>
+    <section id="setting-display" class="hidden">
+      <div id="setting-timer">
+        <input id="hours-input" type="number" min="0" value="00">時間
+        <input id="minutes-input" type="number" min="0" value="00">分
+        <input id="seconds-input" type="number" min="0" value="00">秒
+      </div>
     </section>
   </main>
   <script src="main.js"></script>
