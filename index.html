@@ -33,17 +33,22 @@
 
     <!-- 設定画面 -->
     <section id="setting-display" class="hidden">
+      <p>作業時間</p>
       <div id="work-timer">
-        <input id="hours-input" type="number" min="0" value="00">時間
-        <input id="minutes-input" type="number" min="0" value="00">分
-        <input id="seconds-input" type="number" min="0" value="00">秒
+        <input id="hours-work" type="number" min="0" value="00">時間
+        <input id="minutes-work" type="number" min="0" value="00">分
+        <input id="seconds-work" type="number" min="0" value="00">秒
       </div>
+
       <p>インターバル</p>
       <div id="rest-timer">
-        <input id="hours-interval" type="number" min="0" value="00">時間
-        <input id="minutes-interval" type="number" min="0" value="00">分
-        <input id="seconds-interval" type="number" min="0" value="00">秒
+        <input id="hours-rest" type="number" min="0" value="00">時間
+        <input id="minutes-rest" type="number" min="0" value="00">分
+        <input id="seconds-rest" type="number" min="0" value="00">秒
       </div>
+
+      <p>セット数</p>
+      <input id="set-count" type="number" min="1" value="1">セット
     </section>
   </main>
   <script src="main.js"></script>

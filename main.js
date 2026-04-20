@@ -3,33 +3,40 @@
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
 
-  const hoursInput = document.getElementById("hours-input");
-  const minutesInput = document.getElementById("minutes-input");
-  const secondsInput = document.getElementById("seconds-input");
+  const hoursWork = document.getElementById("hours-work");
+  const minutesWork = document.getElementById("minutes-work");
+  const secondsWork = document.getElementById("seconds-work");
 
-  const hoursInterval = document.getElementById("hours-interval");
-  const minutesInterval = document.getElementById("minutes-interval");
-  const secondsInterval = document.getElementById("seconds-interval");
+  const hoursRest = document.getElementById("hours-rest");
+  const minutesRest = document.getElementById("minutes-rest");
+  const secondsRest = document.getElementById("seconds-rest");
+
+  const setCount = document.getElementById("set-count");
 
   const settingDisplay = document.getElementById("setting-display");
   const settingIcon = document.getElementById("setting-icon");
 
   let intervalId;
+  let currentSet = 1;
 
   function getWorkTotalTime() {
-    const h = Number(hoursInput.value) || 0;
-    const m = Number(minutesInput.value) || 0;
-    const s = Number(secondsInput.value) || 0;
+    const h = Number(hoursWork.value) || 0;
+    const m = Number(minutesWork.value) || 0;
+    const s = Number(secondsWork.value) || 0;
 
     return (h * 3600 + m * 60 + s) * 1000;
   }
 
   function getRestTotalTime() {
-    const h = Number(hoursInterval.value) || 0;
-    const m = Number(minutesInterval.value) || 0;
-    const s = Number(secondsInterval.value) || 0;
+    const h = Number(hoursRest.value) || 0;
+    const m = Number(minutesRest.value) || 0;
+    const s = Number(secondsRest.value) || 0;
 
     return (h * 3600 + m * 60 + s) * 1000;
+  }
+
+  function getSetCount() {
+    return Number(setCount.value) || 1;
   }
 
   function updateTimerText(ms) {
@@ -49,32 +56,9 @@
     updateTimerText(totalTime);
   }
 
-  function activeInterval() {
-    const totalTime = getRestTotalTime();
-
+  function startCountdown(totalTime, finish) {
     if (totalTime <= 0) {
-      return;
-    }
-
-    const endTime = Date.now() + totalTime;
-    updateTimerText(totalTime);
-    intervalId = setInterval(() => {
-      const countDown = endTime - Date.now();
-
-      if (countDown <= 0) {
-        clearInterval(intervalId);
-        updateTimerText(0);
-        return;
-      }
-      updateTimerText(countDown);
-    }, 100);
-    return;
-  }
-
-  start.addEventListener("click", () => {
-    const totalTime = getWorkTotalTime();
-
-    if (totalTime <= 0) {
+      finish();
       return;
     }
 
@@ -88,15 +72,41 @@
 
       if (countDown <= 0) {
         clearInterval(intervalId);
-        updateTimerText(0);
-        activeInterval();
+        updateTimerText(0)
+        finish();
         return;
       }
+
       updateTimerText(countDown);
     }, 100);
-  });
+  }
 
-  hoursInput.addEventListener("input", previewTime);
-  minutesInput.addEventListener("input", previewTime);
-  secondsInput.addEventListener("input", previewTime);
+  function startWork() {
+    startCountdown(getWorkTotalTime(), () => {
+
+      if (currentSet >= getSetCount()) {
+        return;
+      }
+      startRest();
+    });
+  }
+  function startRest() {
+    startCountdown(getRestTotalTime(), () => {
+      currentSet++;
+      startWork();
+    });
+  }
+
+  start.addEventListener('click', () => {
+    if (getWorkTotalTime() <= 0) {
+    return;
+  }
+
+    currentSet = 1;
+    startWork();
+  })
+
+  hoursWork.addEventListener("input", previewTime);
+  minutesWork.addEventListener("input", previewTime);
+  secondsWork.addEventListener("input", previewTime);
 }
