@@ -31,7 +31,7 @@ main {
 .ring {
   width: 220px;
   height: 220px;
-  transform: rotate(-90deg);
+  transform: rotate(90deg) scaleX(-1);
 }
 
 .ring-bg,

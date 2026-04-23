@@ -3,6 +3,13 @@
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
 
+  const progress = document.getElementById('progress');
+  const radius = 100;
+  const circumference = 2 * Math.PI * radius;
+  
+  progress.style.strokeDasharray = circumference;
+  progress.style.strokeDashoffset = 0;
+
   const hoursWork = document.getElementById("hours-work");
   const minutesWork = document.getElementById("minutes-work");
   const secondsWork = document.getElementById("seconds-work");
@@ -51,9 +58,22 @@
       `${String(ss).padStart(2, "0")}`;
   }
 
+  function updateRing(remainingTime, totalTime) {
+    if (totalTime <= 0) {
+      progress.style.strokeDashoffset = circumference;
+      return;
+    }
+
+    const ratio = remainingTime / totalTime;
+    const offset = circumference * (1 - ratio);
+
+    progress.style.strokeDashoffset = offset;
+  }
+
   function previewTime() {
     const totalTime = getWorkTotalTime();
     updateTimerText(totalTime);
+    updateRing(totalTime, totalTime);
   }
 
   function startCountdown(totalTime, finish) {
@@ -66,19 +86,22 @@
 
     const endTime = Date.now() + totalTime;
     updateTimerText(totalTime);
+    updateRing(totalTime, totalTime);
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
 
       if (countDown <= 0) {
         clearInterval(intervalId);
-        updateTimerText(0)
+        updateTimerText(0);
+        updateRing(0, totalTime);
         finish();
         return;
       }
 
       updateTimerText(countDown);
-    }, 100);
+      updateRing(countDown, totalTime);
+    }, 45);
   }
 
   function startWork() {
@@ -87,6 +110,7 @@
       if (currentSet >= getSetCount()) {
         return;
       }
+
       startRest();
     });
   }
@@ -104,9 +128,10 @@
 
     currentSet = 1;
     startWork();
-  })
+  });
 
   hoursWork.addEventListener("input", previewTime);
   minutesWork.addEventListener("input", previewTime);
   secondsWork.addEventListener("input", previewTime);
+  previewTime();
 }
