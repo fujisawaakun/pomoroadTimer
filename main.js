@@ -3,10 +3,10 @@
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
 
-  const progress = document.getElementById('progress');
+  const progress = document.getElementById("progress");
   const radius = 100;
   const circumference = 2 * Math.PI * radius;
-  
+
   progress.style.strokeDasharray = circumference;
   progress.style.strokeDashoffset = 0;
 
@@ -25,7 +25,11 @@
 
   let intervalId;
   let currentSet = 1;
+  let isRunning = false;
+  let remainingTime = 0;
+  let currentMode = 'work';
 
+  //work-timerのinputに入力された数値を取得、ミリ秒に変換
   function getWorkTotalTime() {
     const h = Number(hoursWork.value) || 0;
     const m = Number(minutesWork.value) || 0;
@@ -34,6 +38,7 @@
     return (h * 3600 + m * 60 + s) * 1000;
   }
 
+  //rest-timerのinputに入力された数値を取得、ミリ秒に変換
   function getRestTotalTime() {
     const h = Number(hoursRest.value) || 0;
     const m = Number(minutesRest.value) || 0;
@@ -42,10 +47,12 @@
     return (h * 3600 + m * 60 + s) * 1000;
   }
 
+  //set-countのinputに入力された数値を取得
   function getSetCount() {
     return Number(setCount.value) || 1;
   }
 
+  //受け取った数値を時・分・秒に分割、timerのテキストに表示
   function updateTimerText(ms) {
     const totalSec = Math.ceil(ms / 1000);
     const hh = Math.floor(totalSec / 3600);
@@ -85,14 +92,22 @@
     clearInterval(intervalId);
 
     const endTime = Date.now() + totalTime;
+    remainingTime = totalTime;
+    isRunning = true;
+    start.textContent = "停止";
+
     updateTimerText(totalTime);
     updateRing(totalTime, totalTime);
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
+      remainingTime = countDown;
 
       if (countDown <= 0) {
         clearInterval(intervalId);
+        remainingTime = 0;
+        isRunning = false;
+        start.textContent = 'start';
         updateTimerText(0);
         updateRing(0, totalTime);
         finish();
@@ -105,8 +120,9 @@
   }
 
   function startWork() {
-    startCountdown(getWorkTotalTime(), () => {
+    currentMode = 'work';
 
+    startCountdown(getWorkTotalTime(), () => {
       if (currentSet >= getSetCount()) {
         return;
       }
@@ -115,16 +131,29 @@
     });
   }
   function startRest() {
+    currentMode = 'rest';
+
     startCountdown(getRestTotalTime(), () => {
       currentSet++;
       startWork();
     });
   }
 
-  start.addEventListener('click', () => {
-    if (getWorkTotalTime() <= 0) {
-    return;
+  function resumeCountdown() {
+    
   }
+
+  start.addEventListener("click", () => {
+    if (isRunning === true) {
+      clearInterval(intervalId);
+      isRunning = false;
+      start.textContent = 'start';
+      return;
+    }
+
+    if (getWorkTotalTime() <= 0) {
+      return;
+    }
 
     currentSet = 1;
     startWork();
