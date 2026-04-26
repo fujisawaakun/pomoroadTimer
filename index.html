@@ -1,56 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="style.css">
-  <title>Document</title>
-</head>
-<body id="bg">
-  <main>
-    
-    <div class="timer-wrapper">
-      <svg class="ring"viewBox="0 0 220 220">
-        <circle
-          class="ring-bg"
-          cx="110"
-          cy="110"
-          r="100"
-        />
-        <circle
-          id="progress"
-          class="ring-progress"
-          cx="110"
-          cy="110"
-          r="100"
-        />
-      </svg>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body id="bg">
+    <main>
+      <div class="timer-wrapper">
+        <svg class="ring" viewBox="0 0 220 220">
+          <circle class="ring-bg" cx="110" cy="110" r="100" />
+          <circle
+            id="progress"
+            class="ring-progress"
+            cx="110"
+            cy="110"
+            r="100"
+          />
+        </svg>
 
-      <p id="timer">0:00:00</p>
-      <button id="start">start</button>
-    </div>
-    <img src="setting-icon.svg" id="setting-icon" alt="歯車" width="48px" height="48px">
-
-    <!-- 設定画面 -->
-    <section id="setting-display" class="hidden">
-      <p>作業時間</p>
-      <div id="work-timer">
-        <input id="hours-work" type="number" min="0" value="00">時間
-        <input id="minutes-work" type="number" min="0" value="00">分
-        <input id="seconds-work" type="number" min="0" value="00">秒
+        <p id="timer">0:00:00</p>
+        <button id="start">
+          <svg id="start-icon" viewBox="0 0 24 24">
+            <path id="start-icon-path" d="M8 5v14l11-7z"/>
+          </svg>
+        </button>
       </div>
+      <img
+        src="setting-icon.svg"
+        id="setting-icon"
+        alt="歯車"
+        width="48px"
+        height="48px"
+      />
 
-      <p>インターバル</p>
-      <div id="rest-timer">
-        <input id="hours-rest" type="number" min="0" value="00">時間
-        <input id="minutes-rest" type="number" min="0" value="00">分
-        <input id="seconds-rest" type="number" min="0" value="00">秒
-      </div>
+      <!-- 設定画面 -->
+      <section id="setting-display" class="hidden">
+        <p>作業時間</p>
+        <div id="work-timer">
+          <input id="hours-work" type="number" min="0" value="00" />時間
+          <input id="minutes-work" type="number" min="0" value="00" />分
+          <input id="seconds-work" type="number" min="0" value="00" />秒
+        </div>
 
-      <p>セット数</p>
-      <input id="set-count" type="number" min="1" value="1">セット
-    </section>
-  </main>
-  <script src="main.js"></script>
-</body>
+        <p>インターバル</p>
+        <div id="rest-timer">
+          <input id="hours-rest" type="number" min="0" value="00" />時間
+          <input id="minutes-rest" type="number" min="0" value="00" />分
+          <input id="seconds-rest" type="number" min="0" value="00" />秒
+        </div>
+
+        <p>セット数</p>
+        <input id="set-count" type="number" min="1" value="1" />セット
+      </section>
+    </main>
+    <script src="main.js"></script>
+  </body>
 </html>

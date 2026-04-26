@@ -72,6 +72,28 @@ main {
   align-items: center;
 }
 
+#start {
+  width: 64px;
+  height: 64px;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(2px);
+  cursor: pointer;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#start-icon {
+  fill: white;
+}
+
+#start:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
 
 /* -----設定画面----- */
 section#setting-display {

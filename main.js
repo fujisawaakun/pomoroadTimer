@@ -2,6 +2,7 @@
 {
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
+  const startIconPath = document.getElementById('start-icon-path');
 
   const progress = document.getElementById("progress");
   const radius = 100;
@@ -94,7 +95,7 @@
     const endTime = Date.now() + totalTime;
     remainingTime = totalTime;
     isRunning = true;
-    start.textContent = "停止";
+    updateStartIcon('pause');
 
     updateTimerText(totalTime);
     updateRing(totalTime, totalTime);
@@ -107,7 +108,7 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        start.textContent = 'start';
+        updateStartIcon('play');
         updateTimerText(0);
         updateRing(0, totalTime);
         finish();
@@ -155,7 +156,7 @@
 
     const endTime = Date.now() + remainingTime;
     isRunning = true;
-    start.textContent = '停止';
+    updateStartIcon('pause');
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
@@ -165,7 +166,7 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        start.textContent = 'start';
+        updateStartIcon('play');
         updateTimerText(0);
         updateRing(0, totalTime);
         
@@ -187,11 +188,25 @@
     }, 45);
   }
 
+  function updateStartIcon(date) {
+    if (date === 'play') {
+      startIconPath.setAttribute('d', 'M8 5v14l11-7z');
+    }
+    if (date === 'pause') {
+      startIconPath.setAttribute("d", "M6 5h4v14H6zm8 0h4v14h-4z");
+    }
+  }
+
   start.addEventListener("click", () => {//←ここから
     if (isRunning === true) {
       clearInterval(intervalId);
       isRunning = false;
-      start.textContent = 'start';
+      updateStartIcon('play');
+      return;
+    }
+
+    if (remainingTime > 0) {
+      resumeCountdown();
       return;
     }
 
@@ -200,6 +215,8 @@
     }
 
     currentSet = 1;
+    remainingTime = 0;
+    currentMode = 'work';
     startWork();
   });
 
