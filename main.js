@@ -140,10 +140,54 @@
   }
 
   function resumeCountdown() {
-    
+    let totalTime;
+    if (currentMode === 'work') {
+      totalTime = getWorkTotalTime();
+    } else {
+      totalTime = getRestTotalTime();
+    }
+
+    if (remainingTime <= 0) {
+      return;
+    }
+
+    clearInterval(intervalId);
+
+    const endTime = Date.now() + remainingTime;
+    isRunning = true;
+    start.textContent = '停止';
+
+    intervalId = setInterval(() => {
+      const countDown = endTime - Date.now();
+      remainingTime = countDown;
+
+      if (countDown <= 0) {
+        clearInterval(intervalId);
+        remainingTime = 0;
+        isRunning = false;
+        start.textContent = 'start';
+        updateTimerText(0);
+        updateRing(0, totalTime);
+        
+        if (currentMode === 'work') {
+        if (currentSet >= getSetCount()) {
+            start.textContent = "start";
+            return;
+          }
+          startRest();
+        } else {
+          currentSet++;
+          startWork();
+        }
+        return;
+      }
+
+      updateTimerText(countDown);
+      updateRing(countDown, totalTime);
+    }, 45);
   }
 
-  start.addEventListener("click", () => {
+  start.addEventListener("click", () => {//←ここから
     if (isRunning === true) {
       clearInterval(intervalId);
       isRunning = false;
