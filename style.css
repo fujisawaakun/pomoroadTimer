@@ -72,7 +72,8 @@ main {
   align-items: center;
 }
 
-#start {
+#start,
+#reset {
   width: 64px;
   height: 64px;
   border: none;
@@ -86,11 +87,13 @@ main {
   align-items: center;
 }
 
-#start-icon {
+#start-icon,
+#reset-icon {
   fill: white;
 }
 
-#start:hover {
+#start:hover,
+#reset:hover {
   background: rgba(255, 255, 255, 0.3);
 }
 

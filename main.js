@@ -3,6 +3,7 @@
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
   const startIconPath = document.getElementById('start-icon-path');
+  const resetIconPath = document.getElementById('reset-icon-path');
 
   const progress = document.getElementById("progress");
   const radius = 100;
@@ -197,7 +198,7 @@
     }
   }
 
-  start.addEventListener("click", () => {//←ここから
+  start.addEventListener("click", () => {
     if (isRunning === true) {
       clearInterval(intervalId);
       isRunning = false;
