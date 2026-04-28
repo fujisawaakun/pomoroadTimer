@@ -2,8 +2,9 @@
 {
   const timer = document.getElementById("timer");
   const start = document.getElementById("start");
-  const startIconPath = document.getElementById('start-icon-path');
-  const resetIconPath = document.getElementById('reset-icon-path');
+  const reset = document.getElementById("reset");
+  const startIconPath = document.getElementById("start-icon-path");
+  const resetIconPath = document.getElementById("reset-icon-path");
 
   const progress = document.getElementById("progress");
   const radius = 100;
@@ -15,12 +16,24 @@
   const hoursWork = document.getElementById("hours-work");
   const minutesWork = document.getElementById("minutes-work");
   const secondsWork = document.getElementById("seconds-work");
+  // const workInputs = [hoursWork, minutesWork, secondsWork];
 
   const hoursRest = document.getElementById("hours-rest");
   const minutesRest = document.getElementById("minutes-rest");
   const secondsRest = document.getElementById("seconds-rest");
+  // const restInputs = [hoursRest, minutesRest, secondsRest];
 
   const setCount = document.getElementById("set-count");
+
+  const allInputs = [
+    hoursWork,
+    minutesWork,
+    secondsWork,
+    hoursRest,
+    minutesRest,
+    secondsRest,
+    setCount,
+  ];
 
   const settingDisplay = document.getElementById("setting-display");
   const settingIcon = document.getElementById("setting-icon");
@@ -29,7 +42,7 @@
   let currentSet = 1;
   let isRunning = false;
   let remainingTime = 0;
-  let currentMode = 'work';
+  let currentMode = "work";
 
   //work-timerのinputに入力された数値を取得、ミリ秒に変換
   function getWorkTotalTime() {
@@ -96,7 +109,7 @@
     const endTime = Date.now() + totalTime;
     remainingTime = totalTime;
     isRunning = true;
-    updateStartIcon('pause');
+    updateStartIcon("pause");
 
     updateTimerText(totalTime);
     updateRing(totalTime, totalTime);
@@ -109,7 +122,7 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        updateStartIcon('play');
+        updateStartIcon("play");
         updateTimerText(0);
         updateRing(0, totalTime);
         finish();
@@ -122,10 +135,11 @@
   }
 
   function startWork() {
-    currentMode = 'work';
+    currentMode = "work";
 
     startCountdown(getWorkTotalTime(), () => {
       if (currentSet >= getSetCount()) {
+        inputsDisabled(false);
         return;
       }
 
@@ -133,7 +147,7 @@
     });
   }
   function startRest() {
-    currentMode = 'rest';
+    currentMode = "rest";
 
     startCountdown(getRestTotalTime(), () => {
       currentSet++;
@@ -143,7 +157,7 @@
 
   function resumeCountdown() {
     let totalTime;
-    if (currentMode === 'work') {
+    if (currentMode === "work") {
       totalTime = getWorkTotalTime();
     } else {
       totalTime = getRestTotalTime();
@@ -157,7 +171,7 @@
 
     const endTime = Date.now() + remainingTime;
     isRunning = true;
-    updateStartIcon('pause');
+    updateStartIcon("pause");
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
@@ -167,13 +181,13 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        updateStartIcon('play');
+        updateStartIcon("play");
         updateTimerText(0);
         updateRing(0, totalTime);
-        
-        if (currentMode === 'work') {
-        if (currentSet >= getSetCount()) {
-            start.textContent = "start";
+
+        if (currentMode === "work") {
+          if (currentSet >= getSetCount()) {
+            updateStartIcon("play");
             return;
           }
           startRest();
@@ -190,19 +204,25 @@
   }
 
   function updateStartIcon(date) {
-    if (date === 'play') {
-      startIconPath.setAttribute('d', 'M8 5v14l11-7z');
+    if (date === "play") {
+      startIconPath.setAttribute("d", "M8 5v14l11-7z");
     }
-    if (date === 'pause') {
+    if (date === "pause") {
       startIconPath.setAttribute("d", "M6 5h4v14H6zm8 0h4v14h-4z");
     }
+  }
+
+  function inputsDisabled(isDisabled) {
+    allInputs.forEach((input) => {
+      input.disabled = isDisabled;
+    });
   }
 
   start.addEventListener("click", () => {
     if (isRunning === true) {
       clearInterval(intervalId);
       isRunning = false;
-      updateStartIcon('play');
+      updateStartIcon("play");
       return;
     }
 
@@ -217,8 +237,13 @@
 
     currentSet = 1;
     remainingTime = 0;
-    currentMode = 'work';
+    currentMode = "work";
     startWork();
+    inputsDisabled(true);
+  });
+
+  reset.addEventListener("click", () => {
+    inputsDisabled(false);
   });
 
   hoursWork.addEventListener("input", previewTime);
