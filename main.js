@@ -4,7 +4,6 @@
   const start = document.getElementById("start");
   const reset = document.getElementById("reset");
   const startIconPath = document.getElementById("start-icon-path");
-  const resetIconPath = document.getElementById("reset-icon-path");
 
   const progress = document.getElementById("progress");
   const radius = 100;
@@ -243,7 +242,14 @@
   });
 
   reset.addEventListener("click", () => {
+    clearInterval(intervalId);
+    isRunning = false;
+    currentSet = 1;
+    remainingTime = 0;
+    currentMode = "work";
+    updateStartIcon("play");
     inputsDisabled(false);
+    previewTime();
   });
 
   hoursWork.addEventListener("input", previewTime);
