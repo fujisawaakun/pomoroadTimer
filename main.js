@@ -94,7 +94,7 @@
   function previewTime() {
     const totalTime = getWorkTotalTime();
     updateTimerText(timer, totalTime);
-    updateRing(totalTime, totalTime);
+    updateRing(progress, circumference, totalTime, totalTime);
   }
 
   function startCountdown(totalTime, finish) {
@@ -108,10 +108,10 @@
     const endTime = Date.now() + totalTime;
     remainingTime = totalTime;
     isRunning = true;
-    updateStartIcon("pause");
+    updateStartIcon(startIconPath, "pause");
 
     updateTimerText(timer, totalTime);
-    updateRing(totalTime, totalTime);
+    updateRing(progress, circumference, totalTime, totalTime);
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
@@ -121,15 +121,15 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        updateStartIcon("play");
+        updateStartIcon(startIconPath, "play");
         updateTimerText(timer, 0);
-        updateRing(0, totalTime);
+        updateRing(progress, circumference, 0, totalTime);
         finish();
         return;
       }
 
       updateTimerText(timer, countDown);
-      updateRing(countDown, totalTime);
+      updateRing(progress, circumference, countDown, totalTime);
     }, 45);
   }
 
@@ -138,7 +138,7 @@
 
     startCountdown(getWorkTotalTime(), () => {
       if (currentSet >= getSetCount()) {
-        inputsDisabled(false);
+        inputsDisabled(allInputs, false);
         return;
       }
 
@@ -170,7 +170,7 @@
 
     const endTime = Date.now() + remainingTime;
     isRunning = true;
-    updateStartIcon("pause");
+    updateStartIcon(startIconPath, "pause");
 
     intervalId = setInterval(() => {
       const countDown = endTime - Date.now();
@@ -180,13 +180,13 @@
         clearInterval(intervalId);
         remainingTime = 0;
         isRunning = false;
-        updateStartIcon("play");
+        updateStartIcon(startIconPath, "play");
         updateTimerText(timer, 0);
-        updateRing(0, totalTime);
+        updateRing(progress, circumference, 0, totalTime);
 
         if (currentMode === "work") {
           if (currentSet >= getSetCount()) {
-            updateStartIcon("play");
+            updateStartIcon(startIconPath, "play");
             return;
           }
           startRest();
@@ -198,11 +198,11 @@
       }
 
       updateTimerText(timer, countDown);
-      updateRing(countDown, totalTime);
+      updateRing(progress, circumference, countDown, totalTime);
     }, 45);
   }
 
-  // function updateStartIcon(date) {
+  // function updateStartIcon(startIconPath, date) {
   //   if (date === "play") {
   //     startIconPath.setAttribute("d", "M8 5v14l11-7z");
   //   }
@@ -211,17 +211,17 @@
   //   }
   // }
 
-  // function inputsDisabled(isDisabled) {
+  // function inputsDisabled(allInputs, isDisabled) {
   //   allInputs.forEach((input) => {
   //     input.disabled = isDisabled;
   //   });
   // }
 
   start.addEventListener("click", () => {
-    if (isRunning === true) {
+    if (isRunning) {
       clearInterval(intervalId);
       isRunning = false;
-      updateStartIcon("play");
+      updateStartIcon(startIconPath, "play");
       return;
     }
 
@@ -238,7 +238,7 @@
     remainingTime = 0;
     currentMode = "work";
     startWork();
-    inputsDisabled(true);
+    inputsDisabled(allInputs, true);
   });
 
   reset.addEventListener("click", () => {
@@ -247,8 +247,8 @@
     currentSet = 1;
     remainingTime = 0;
     currentMode = "work";
-    updateStartIcon("play");
-    inputsDisabled(false);
+    updateStartIcon(startIconPath, "play");
+    inputsDisabled(allInputs, false);
     previewTime();
   });
 
