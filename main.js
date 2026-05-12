@@ -135,9 +135,11 @@
 
   function startWork() {
     currentMode = "work";
+    playWorkBGM();
 
     startCountdown(getWorkTotalTime(), () => {
       if (currentSet >= getSetCount()) {
+        resetAllBGM();
         inputsDisabled(allInputs, false);
         return;
       }
@@ -147,6 +149,7 @@
   }
   function startRest() {
     currentMode = "rest";
+    playRestBGM();
 
     startCountdown(getRestTotalTime(), () => {
       currentSet++;
@@ -158,8 +161,10 @@
     let totalTime;
     if (currentMode === "work") {
       totalTime = getWorkTotalTime();
+      playWorkBGM();
     } else {
       totalTime = getRestTotalTime();
+      playRestBGM();
     }
 
     if (remainingTime <= 0) {
@@ -186,6 +191,7 @@
 
         if (currentMode === "work") {
           if (currentSet >= getSetCount()) {
+            resetAllBGM();
             updateStartIcon(startIconPath, "play");
             return;
           }
@@ -222,6 +228,7 @@
       clearInterval(intervalId);
       isRunning = false;
       updateStartIcon(startIconPath, "play");
+      pauseAllBGM();
       return;
     }
 
@@ -249,6 +256,7 @@
     currentMode = "work";
     updateStartIcon(startIconPath, "play");
     inputsDisabled(allInputs, false);
+    resetAllBGM();
     previewTime();
   });
 
