@@ -40,3 +40,10 @@ function resetAllBGM() {
   workBGM.currentTime = 0;
   restBGM.currentTime = 0;
 }
+
+  function updateVolume(volume, volumeValue) {
+    workBGM.volume = volume;
+    restBGM.volume = volume;
+
+    volumeValue.textContent = `${Math.round(volume * 100)}`;
+  }

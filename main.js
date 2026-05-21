@@ -15,12 +15,10 @@
   const hoursWork = document.getElementById("hours-work");
   const minutesWork = document.getElementById("minutes-work");
   const secondsWork = document.getElementById("seconds-work");
-  // const workInputs = [hoursWork, minutesWork, secondsWork];
 
   const hoursRest = document.getElementById("hours-rest");
   const minutesRest = document.getElementById("minutes-rest");
   const secondsRest = document.getElementById("seconds-rest");
-  // const restInputs = [hoursRest, minutesRest, secondsRest];
 
   const setCount = document.getElementById("set-count");
 
@@ -33,6 +31,9 @@
     secondsRest,
     setCount,
   ];
+
+  const volumeSlider = document.getElementById("volume-slider");
+  const volumeValue = document.getElementById("volume-value");
 
   const settingDisplay = document.getElementById("setting-display");
   const settingIcon = document.getElementById("setting-icon");
@@ -208,6 +209,13 @@
     }, 45);
   }
 
+  // function updateVolume(volume) {
+  //   workBGM.volume = volume;
+  //   restBGM.volume = volume;
+
+  //   volumeValue.textContent = `${Math.round(volume * 100)}`;
+  // }
+
   // function updateStartIcon(startIconPath, date) {
   //   if (date === "play") {
   //     startIconPath.setAttribute("d", "M8 5v14l11-7z");
@@ -260,8 +268,40 @@
     previewTime();
   });
 
+  //ローカルに音量設定の保存-------------------------
+  const VOLUME_STORAGE_KEY = "bgm-volume";
+
+  function saveVolume(volume) {
+    localStorage.setItem(VOLUME_STORAGE_KEY, String(volume));
+  }
+
+  function loadVolume() {
+    const saved = localStorage.getItem(VOLUME_STORAGE_KEY);
+    
+    if (saved === null) {
+      return 0.5;
+    }
+
+    return Number(saved);
+  }
+  //-------------------------------------------------
+
   hoursWork.addEventListener("input", previewTime);
   minutesWork.addEventListener("input", previewTime);
   secondsWork.addEventListener("input", previewTime);
+
+  //音量の操作
+  volumeSlider.addEventListener("input", () => {
+    const volume = Number(volumeSlider.value);
+    updateVolume(volume, volumeValue);
+    saveVolume(volume)
+  });
+
+  const savedVolume = loadVolume();
+  volumeSlider.value = savedVolume;
+  updateVolume(savedVolume, volumeValue);
+
   previewTime();
 }
+
+//Next 作業時間、インターバル、セット数の保存
