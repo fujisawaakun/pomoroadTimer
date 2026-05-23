@@ -307,45 +307,44 @@
     minutesRest.value = settings.rest?.minutes ?? "00";
     secondsRest.value = settings.rest?.seconds ?? "00";
 
-    
+    setCount.value = settings.setCount ?? "1";
+    volumeSlider.value = settings.volume ?? "0.5";
+    updateVolume(Number(volumeSlider.value),volumeValue);
   }
 
   //-------------------------------------------------
 
-  //ローカルに音量設定の保存-------------------------
-  const VOLUME_STORAGE_KEY = "bgm-volume";
+  hoursWork.addEventListener("input", () => {
+    previewTime();
+    saveSettings();
+  });
+  minutesWork.addEventListener("input", () => {
+    previewTime();
+    saveSettings();
+  });
+  secondsWork.addEventListener("input", () => {
+    previewTime();
+    saveSettings();
+  });
 
-  function saveVolume(volume) {
-    localStorage.setItem(VOLUME_STORAGE_KEY, String(volume));
-  }
+  hoursRest.addEventListener("input", saveSettings);
+  minutesRest.addEventListener("input", saveSettings);
+  secondsRest.addEventListener("input", saveSettings);
 
-  function loadVolume() {
-    const saved = localStorage.getItem(VOLUME_STORAGE_KEY);
-
-    if (saved === null) {
-      return 0.5;
-    }
-
-    return Number(saved);
-  }
-  //-------------------------------------------------
-
-  hoursWork.addEventListener("input", previewTime);
-  minutesWork.addEventListener("input", previewTime);
-  secondsWork.addEventListener("input", previewTime);
+  setCount.addEventListener("input", saveSettings);
 
   //音量の操作
   volumeSlider.addEventListener("input", () => {
     const volume = Number(volumeSlider.value);
     updateVolume(volume, volumeValue);
-    saveVolume(volume);
+    saveSettings();
   });
 
-  const savedVolume = loadVolume();
-  volumeSlider.value = savedVolume;
-  updateVolume(savedVolume, volumeValue);
 
+  loadSettings();
   previewTime();
+  updateVolume(Number(volumeSlider.value), volumeValue);
+
 }
 
-//Next 作業時間、インターバル、セット数の保存
+//Next 
