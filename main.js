@@ -268,6 +268,50 @@
     previewTime();
   });
 
+  //ローカルにwork,restの時間、セット数の保存-------------------------
+  const SETTINGS_STORAGE_KEY = "timer-setting";
+
+  function saveSettings() {
+    const settings = {
+      work: {
+        hours: hoursWork.value,
+        minutes: minutesWork.value,
+        seconds: secondsWork.value,
+      },
+      rest: {
+        hours: hoursRest.value,
+        minutes: minutesRest.value,
+        seconds: secondsRest.value,
+      },
+      setCount: setCount.value,
+      volume: volumeSlider.value,
+    };
+
+    localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
+  }
+
+  function loadSettings() {
+    const saved = localStorage.getItem(SETTINGS_STORAGE_KEY);
+
+    if (!saved) {
+      return;
+    }
+
+    const settings = JSON.parse(saved);
+
+    hoursWork.value = settings.work?.hours ?? "00";
+    minutesWork.value = settings.work?.minutes ?? "00";
+    secondsWork.value = settings.work?.seconds ?? "00";
+
+    hoursRest.value = settings.rest?.hours ?? "00";
+    minutesRest.value = settings.rest?.minutes ?? "00";
+    secondsRest.value = settings.rest?.seconds ?? "00";
+
+    
+  }
+
+  //-------------------------------------------------
+
   //ローカルに音量設定の保存-------------------------
   const VOLUME_STORAGE_KEY = "bgm-volume";
 
@@ -277,7 +321,7 @@
 
   function loadVolume() {
     const saved = localStorage.getItem(VOLUME_STORAGE_KEY);
-    
+
     if (saved === null) {
       return 0.5;
     }
@@ -294,7 +338,7 @@
   volumeSlider.addEventListener("input", () => {
     const volume = Number(volumeSlider.value);
     updateVolume(volume, volumeValue);
-    saveVolume(volume)
+    saveVolume(volume);
   });
 
   const savedVolume = loadVolume();
