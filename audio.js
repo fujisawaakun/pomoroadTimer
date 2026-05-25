@@ -1,6 +1,6 @@
 "use strict";
 
-const workBGM = new Audio("workBGM/優しく穏やかな音楽.mp3");
+const workBGM = new Audio("workBGM/healing2.mp3");
 const restBGM = new Audio("restBGM/チルアウト.mp3");
 
 workBGM.loop = true;
