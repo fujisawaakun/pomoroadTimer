@@ -12,6 +12,7 @@ function playWorkBGM() {
   restBGM.currentTime = 0; //restBGMを初期化
 
   //workBGMの再生
+  workBGM.currentTime = 0; //workBGMを初期化
   workBGM.play().catch((error) => {
     console.log("workBGM再生失敗", error); //workBGMが失敗した際のエラーメッセージ
   });
@@ -23,6 +24,7 @@ function playRestBGM() {
   workBGM.currentTime = 0; //workBGMを初期化
 
   //restBGMの再生
+  restBGM.currentTime = 0; //restBGMを初期化
   restBGM.play().catch((error) => {
     console.log("restBGM再生失敗", error); //restBGMが失敗した際のエラーメッセージ
   });
@@ -46,4 +48,16 @@ function resetAllBGM() {
     restBGM.volume = volume;
 
     volumeValue.textContent = `${Math.round(volume * 100)}`;
+  }
+
+  function setCurrentModeVolume(mode, volume) {
+    if (mode === "work") {
+      workBGM.volume = volume;
+      return;
+    }
+
+    if (mode === "rest") {
+      restBGM.volume = volume;
+      return;
+    }
   }

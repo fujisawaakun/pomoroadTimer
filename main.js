@@ -129,6 +129,8 @@
         return;
       }
 
+      fadeOutBGM(countDown);
+
       updateTimerText(timer, countDown);
       updateRing(progress, circumference, countDown, totalTime);
     }, 45);
@@ -204,6 +206,8 @@
         return;
       }
 
+      fadeOutBGM(countDown);
+
       updateTimerText(timer, countDown);
       updateRing(progress, circumference, countDown, totalTime);
     }, 45);
@@ -268,7 +272,7 @@
     previewTime();
   });
 
-  //ローカルにwork,restの時間、セット数の保存-------------------------
+  //ローカルに「work,restの時間、セット数、音量」の保存-------------------------
   const SETTINGS_STORAGE_KEY = "timer-setting";
 
   function saveSettings() {
@@ -314,6 +318,19 @@
 
   //-------------------------------------------------
 
+  function fadeOutBGM(countDown) {
+    const fadeDuration = 3000;
+    const baseVolume = Number(volumeSlider.value);
+
+    if (countDown > fadeDuration) {
+      setCurrentModeVolume(currentMode, baseVolume);
+      return;
+    }
+
+    const ratio = Math.max(0, countDown / fadeDuration);
+    setCurrentModeVolume(currentMode, baseVolume * ratio);
+  }
+
   hoursWork.addEventListener("input", () => {
     previewTime();
     saveSettings();
@@ -338,6 +355,10 @@
     const volume = Number(volumeSlider.value);
     updateVolume(volume, volumeValue);
     saveSettings();
+
+    if (isRunning && remainingTime > 3000) {
+    setCurrentModeVolume(currentMode, volume);
+  }
   });
 
 
