@@ -3,8 +3,11 @@
 const workBGM = new Audio("workBGM/healing2.mp3");
 const restBGM = new Audio("restBGM/チルアウト.mp3");
 
+const countDownBGM = new Audio("SE/countdown_3sec.mp3");
+
 workBGM.loop = true;
 restBGM.loop = true;
+countDownBGM.loop = false;
 
 //workタイムに流すBGM
 function playWorkBGM() {
@@ -60,4 +63,11 @@ function resetAllBGM() {
       restBGM.volume = volume;
       return;
     }
+  }
+
+  function playCountDownBGM() {
+    countDownBGM.currentTime = 0;
+    countDownBGM.play().catch((error) => {
+      console.log('countDownBGM再生失敗', error);
+    });
   }

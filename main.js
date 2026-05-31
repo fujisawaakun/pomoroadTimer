@@ -43,6 +43,7 @@
   let isRunning = false;
   let remainingTime = 0;
   let currentMode = "work";
+  let hasPlayedCountdown = false;
 
   //work-timerのinputに入力された数値を取得、ミリ秒に変換
   function getWorkTotalTime() {
@@ -106,6 +107,8 @@
 
     clearInterval(intervalId);
 
+    hasPlayedCountdown = false;
+
     const endTime = Date.now() + totalTime;
     remainingTime = totalTime;
     isRunning = true;
@@ -129,6 +132,7 @@
         return;
       }
 
+      timerEndBGM(countDown);
       fadeOutBGM(countDown);
 
       updateTimerText(timer, countDown);
@@ -344,6 +348,13 @@
     saveSettings();
   });
 
+  function timerEndBGM(countDown) {
+    if (countDown <= 3000 && !hasPlayedCountdown) {
+      playCountDownBGM();
+      hasPlayedCountdown = true;
+    }
+  }
+
   hoursRest.addEventListener("input", saveSettings);
   minutesRest.addEventListener("input", saveSettings);
   secondsRest.addEventListener("input", saveSettings);
@@ -365,7 +376,6 @@
   loadSettings();
   previewTime();
   updateVolume(Number(volumeSlider.value), volumeValue);
-
 }
 
 //Next 
