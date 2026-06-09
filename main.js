@@ -178,6 +178,10 @@
       return;
     }
 
+    if (remainingTime <= 3000) {
+      resumeCountdownBGM();
+    }
+
     clearInterval(intervalId);
 
     const endTime = Date.now() + remainingTime;
@@ -210,6 +214,7 @@
         return;
       }
 
+      timerEndBGM(countDown);
       fadeOutBGM(countDown);
 
       updateTimerText(timer, countDown);

@@ -4,6 +4,7 @@ const workBGM = new Audio("workBGM/healing2.mp3");
 const restBGM = new Audio("restBGM/チルアウト.mp3");
 
 const countDownBGM = new Audio("SE/countdown_3sec.mp3");
+countDownBGM.volume = 0.2;
 
 workBGM.loop = true;
 restBGM.loop = true;
@@ -36,38 +37,47 @@ function playRestBGM() {
 function pauseAllBGM() {
   workBGM.pause();
   restBGM.pause();
+  countDownBGM.pause();
 }
 
 function resetAllBGM() {
   workBGM.pause();
   restBGM.pause();
+  countDownBGM.pause();
 
   workBGM.currentTime = 0;
   restBGM.currentTime = 0;
+  countDownBGM.currentTime = 0;
 }
 
-  function updateVolume(volume, volumeValue) {
+function updateVolume(volume, volumeValue) {
+  workBGM.volume = volume;
+  restBGM.volume = volume;
+
+  volumeValue.textContent = `${Math.round(volume * 100)}`;
+}
+
+function setCurrentModeVolume(mode, volume) {
+  if (mode === "work") {
     workBGM.volume = volume;
+    return;
+  }
+
+  if (mode === "rest") {
     restBGM.volume = volume;
-
-    volumeValue.textContent = `${Math.round(volume * 100)}`;
+    return;
   }
+}
 
-  function setCurrentModeVolume(mode, volume) {
-    if (mode === "work") {
-      workBGM.volume = volume;
-      return;
-    }
+function playCountDownBGM() {
+  countDownBGM.currentTime = 0;
+  countDownBGM.play().catch((error) => {
+    console.log("countDownBGM再生失敗", error);
+  });
+}
 
-    if (mode === "rest") {
-      restBGM.volume = volume;
-      return;
-    }
-  }
-
-  function playCountDownBGM() {
-    countDownBGM.currentTime = 0;
-    countDownBGM.play().catch((error) => {
-      console.log('countDownBGM再生失敗', error);
-    });
-  }
+function resumeCountdownBGM() {
+  countDownBGM.play().catch((error) => {
+    console.log("countDownBGM再生失敗", error);
+  });
+}
