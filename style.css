@@ -146,6 +146,20 @@ input[type="number"]::-webkit-inner-spin-button {
   font-size: 20px;
 }
 
+#bgm-setting p {
+  margin-bottom: 0;
+}
+
+#work-bgm-select,
+#rest-bgm-select {
+  width: 50%;
+  padding: 4px;
+  font-size: 16px;
+  margin-top: 4px;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
 #volume-control {
   display: flex;
   align-items: center;

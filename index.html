@@ -23,12 +23,15 @@
         <p id="timer">0:00:00</p>
         <button id="start">
           <svg id="start-icon" viewBox="0 0 24 24">
-            <path id="start-icon-path" d="M8 5v14l11-7z"/>
+            <path id="start-icon-path" d="M8 5v14l11-7z" />
           </svg>
         </button>
         <button id="reset">
           <svg id="reset-icon" viewBox="0 0 24 24">
-            <path id="reset-icon-path" d="M12 5V2L8 6l4 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"/>
+            <path
+              id="reset-icon-path"
+              d="M12 5V2L8 6l4 4V7a5 5 0 1 1-5 5H5a7 7 0 1 0 7-7z"
+            />
           </svg>
         </button>
       </div>
@@ -48,6 +51,14 @@
           <input id="minutes-work" type="number" min="0" value="00" />分
           <input id="seconds-work" type="number" min="0" value="00" />秒
         </div>
+        <div id="bgm-setting">
+          <p>作業時BGM</p>
+          <select name="workBGM" id="work-bgm-select">
+            <option value="workBGM/healing2.mp3">BGM1</option>
+            <option value="#">BGM2</option>
+            <option value="#">BGM3</option>
+          </select>
+        </div>
 
         <p>インターバル</p>
         <div id="rest-timer">
@@ -55,14 +66,29 @@
           <input id="minutes-rest" type="number" min="0" value="00" />分
           <input id="seconds-rest" type="number" min="0" value="00" />秒
         </div>
+        <div id="bgm-setting">
+          <p>休憩時BGM</p>
+          <select name="restBGM" id="rest-bgm-select">
+            <option value="restBGM/チルアウト.mp3">BGM1</option>
+            <option value="#">BGM2</option>
+            <option value="#">BGM3</option>
+          </select>
+        </div>
 
         <p>セット数</p>
         <input id="set-count" type="number" min="1" value="1" />セット
 
         <p>音量</p>
         <div id="volume-control">
-          <input id="volume-slider" type="range" min="0" max="1" step="0.01" value="0.5">
-          <span id=volume-value>50</span>
+          <input
+            id="volume-slider"
+            type="range"
+            min="0"
+            max="1"
+            step="0.01"
+            value="0.5"
+          />
+          <span id="volume-value">50</span>
         </div>
       </section>
     </main>
