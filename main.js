@@ -32,6 +32,11 @@
     setCount,
   ];
 
+  const workBGMSelect = document.getElementById('work-bgm-select');
+  const restBGMSelect = document.getElementById('rest-bgm-select');
+  setWorkBGMSrc(workBGMSelect.value);
+  setRestBGMSrc(restBGMSelect.value);
+
   const volumeSlider = document.getElementById("volume-slider");
   const volumeValue = document.getElementById("volume-value");
 

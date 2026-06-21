@@ -10,6 +10,20 @@ workBGM.loop = true;
 restBGM.loop = true;
 countDownBGM.loop = false;
 
+function setWorkBGMSrc(src) {
+  workBGM.pause();
+  workBGM.currentTime = 0;
+  workBGM.src = src;
+  workBGM.load();
+}
+
+function setRestBGMSrc(src) {
+  restBGM.pause();
+  restBGM.currentTime = 0;
+  restBGM.src = src;
+  restBGM.load();
+}
+
 //workタイムに流すBGM
 function playWorkBGM() {
   restBGM.pause(); //restBGMをストップ
