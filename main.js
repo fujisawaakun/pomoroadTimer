@@ -294,7 +294,20 @@
     if (wasRunningWork === true) {
       playWorkBGM();
     }
-  })
+
+    saveSettings();
+  });
+
+    restBGMSelect.addEventListener("change", () => {
+    const wasRunningRest = isRunning === true && currentMode === "rest";
+    setRestBGMSrc(restBGMSelect.value);
+
+    if (wasRunningRest === true) {
+      playRestBGM();
+    }
+
+    saveSettings();
+  });
 
   //ローカルに「work,restの時間、セット数、音量」の保存-------------------------
   const SETTINGS_STORAGE_KEY = "timer-setting";
@@ -311,9 +324,11 @@
         minutes: minutesRest.value,
         seconds: secondsRest.value,
       },
+      workBGM: workBGMSelect.value,
+      restBGM: restBGMSelect.value,
       setCount: setCount.value,
       volume: volumeSlider.value,
-    };
+    }
 
     localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
   }
@@ -334,6 +349,12 @@
     hoursRest.value = settings.rest?.hours ?? "00";
     minutesRest.value = settings.rest?.minutes ?? "00";
     secondsRest.value = settings.rest?.seconds ?? "00";
+
+    workBGMSelect.value = settings.workBGM ?? "workBGM/healing2.mp3";
+    restBGMSelect.value = settings.restBGM ?? "restBGM/チルアウト.mp3.mp3";
+
+    setWorkBGMSrc(workBGMSelect.value);
+    setRestBGMSrc(restBGMSelect.value);
 
     setCount.value = settings.setCount ?? "1";
     volumeSlider.value = settings.volume ?? "0.5";
