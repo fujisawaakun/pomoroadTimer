@@ -33,8 +33,9 @@
   ];
 
   const workBGMSelect = document.getElementById('work-bgm-select');
-  const restBGMSelect = document.getElementById('rest-bgm-select');
   setWorkBGMSrc(workBGMSelect.value);
+
+  const restBGMSelect = document.getElementById('rest-bgm-select');
   setRestBGMSrc(restBGMSelect.value);
 
   const volumeSlider = document.getElementById("volume-slider");
@@ -285,6 +286,15 @@
     resetAllBGM();
     previewTime();
   });
+
+  workBGMSelect.addEventListener("change", () => {
+    const wasRunningWork = isRunning === true && currentMode === "work";
+    setWorkBGMSrc(workBGMSelect.value);
+
+    if (wasRunningWork === true) {
+      playWorkBGM();
+    }
+  })
 
   //ローカルに「work,restの時間、セット数、音量」の保存-------------------------
   const SETTINGS_STORAGE_KEY = "timer-setting";

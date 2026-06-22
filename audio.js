@@ -1,7 +1,7 @@
 "use strict";
 
-const workBGM = new Audio("workBGM/healing2.mp3");
-const restBGM = new Audio("restBGM/チルアウト.mp3");
+const workBGM = new Audio();
+const restBGM = new Audio();
 
 const countDownBGM = new Audio("SE/countdown_3sec.mp3");
 countDownBGM.volume = 0.2;
