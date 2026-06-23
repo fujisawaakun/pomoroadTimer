@@ -3,7 +3,7 @@
 const workBGM = new Audio();
 const restBGM = new Audio();
 
-const countDownBGM = new Audio("SE/countdown_3sec.mp3");
+const countDownBGM = new Audio("SE/countdown_4sec.mp3");
 countDownBGM.volume = 0.2;
 
 workBGM.loop = true;

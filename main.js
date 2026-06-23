@@ -184,7 +184,7 @@
       return;
     }
 
-    if (remainingTime <= 3000) {
+    if (remainingTime <= 4000) {
       resumeCountdownBGM();
     }
 
@@ -351,7 +351,7 @@
     secondsRest.value = settings.rest?.seconds ?? "00";
 
     workBGMSelect.value = settings.workBGM ?? "workBGM/healing2.mp3";
-    restBGMSelect.value = settings.restBGM ?? "restBGM/チルアウト.mp3.mp3";
+    restBGMSelect.value = settings.restBGM ?? "restBGM/チルアウト.mp3";
 
     setWorkBGMSrc(workBGMSelect.value);
     setRestBGMSrc(restBGMSelect.value);
@@ -364,7 +364,7 @@
   //-------------------------------------------------
 
   function fadeOutBGM(countDown) {
-    const fadeDuration = 3000;
+    const fadeDuration = 4000;
     const baseVolume = Number(volumeSlider.value);
 
     if (countDown > fadeDuration) {
@@ -390,7 +390,7 @@
   });
 
   function timerEndBGM(countDown) {
-    if (countDown <= 3000 && !hasPlayedCountdown) {
+    if (countDown <= 4000 && !hasPlayedCountdown) {
       playCountDownBGM();
       hasPlayedCountdown = true;
     }
@@ -408,7 +408,7 @@
     updateVolume(volume, volumeValue);
     saveSettings();
 
-    if (isRunning && remainingTime > 3000) {
+    if (isRunning && remainingTime > 4000) {
     setCurrentModeVolume(currentMode, volume);
   }
   });
