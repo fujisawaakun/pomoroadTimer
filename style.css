@@ -99,6 +99,8 @@ main {
 }
 
 
+
+
 /* -----設定画面----- */
 section#setting-display {
   background: #fff;
@@ -166,7 +168,10 @@ input[type="number"]::-webkit-inner-spin-button {
   padding: 24px;
   font-size: 12px;
   text-align: center;
-  
+}
+
+.BGM-drop-field.drag-over {
+  background: #eee;
 }
 
 #volume-control {

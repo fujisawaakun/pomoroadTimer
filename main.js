@@ -38,6 +38,9 @@
   const restBGMSelect = document.getElementById('rest-bgm-select');
   setRestBGMSrc(restBGMSelect.value);
 
+  const workBGMDropArea = document.getElementById('work-bgm-drop-area');
+  const restBGMDropArea = document.getElementById('rest-bgm-drop-area');
+
   const volumeSlider = document.getElementById("volume-slider");
   const volumeValue = document.getElementById("volume-value");
 
@@ -307,6 +310,24 @@
     }
 
     saveSettings();
+  });
+
+  workBGMDropArea.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    workBGMDropArea.classList.add("drag-over");
+  });
+
+    workBGMDropArea.addEventListener("dragleave", () => {
+    workBGMDropArea.classList.remove("drag-over");
+  });
+  
+    restBGMDropArea.addEventListener("dragover", (event) => {
+    event.preventDefault();
+    restBGMDropArea.classList.add("drag-over");
+  });
+
+    restBGMDropArea.addEventListener("dragleave", () => {
+    restBGMDropArea.classList.remove("drag-over");
   });
 
   //ローカルに「work,restの時間、セット数、音量」の保存-------------------------
