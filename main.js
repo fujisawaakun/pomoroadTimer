@@ -32,14 +32,14 @@
     setCount,
   ];
 
-  const workBGMSelect = document.getElementById('work-bgm-select');
+  const workBGMSelect = document.getElementById("work-bgm-select");
   setWorkBGMSrc(workBGMSelect.value);
 
-  const restBGMSelect = document.getElementById('rest-bgm-select');
+  const restBGMSelect = document.getElementById("rest-bgm-select");
   setRestBGMSrc(restBGMSelect.value);
 
-  const workBGMDropArea = document.getElementById('work-bgm-drop-area');
-  const restBGMDropArea = document.getElementById('rest-bgm-drop-area');
+  const workBGMDropArea = document.getElementById("work-bgm-drop-area");
+  const restBGMDropArea = document.getElementById("rest-bgm-drop-area");
 
   const volumeSlider = document.getElementById("volume-slider");
   const volumeValue = document.getElementById("volume-value");
@@ -301,7 +301,7 @@
     saveSettings();
   });
 
-    restBGMSelect.addEventListener("change", () => {
+  restBGMSelect.addEventListener("change", () => {
     const wasRunningRest = isRunning === true && currentMode === "rest";
     setRestBGMSrc(restBGMSelect.value);
 
@@ -312,25 +312,55 @@
     saveSettings();
   });
 
+  //---作業用BGMをドラッグ＆ドロップする時の処理---
   workBGMDropArea.addEventListener("dragover", (event) => {
     event.preventDefault();
     workBGMDropArea.classList.add("drag-over");
   });
 
-    workBGMDropArea.addEventListener("dragleave", () => {
+  workBGMDropArea.addEventListener("dragleave", () => {
     workBGMDropArea.classList.remove("drag-over");
   });
-  
-    restBGMDropArea.addEventListener("dragover", (event) => {
+
+  workBGMDropArea.addEventListener("drop", (event) => {
+    event.preventDefault();
+    workBGMDropArea.classList.remove("drag-over");
+
+    const file = event.dataTransfer.files[0];
+
+    if (!file) {
+      return;
+    }
+
+    if (!file.type.startsWith("audio/")) {
+      alert("音声ファイルを選択してください");
+      return;
+    }
+
+    const fileUrl = URL.createObjectURL(file);
+
+    const wasRunningWork = isrunning === true && currentMode === "work";
+
+    setWorkBGMSrc(fileUrl);
+
+    if (wasRunningWork === true) {
+      playWorkBGM();
+    }
+
+    workBGMDropArea.textContent = file.name;
+  });
+
+  //---休憩用BGMをドラッグ＆ドロップする時の処理---
+  restBGMDropArea.addEventListener("dragover", (event) => {
     event.preventDefault();
     restBGMDropArea.classList.add("drag-over");
   });
 
-    restBGMDropArea.addEventListener("dragleave", () => {
+  restBGMDropArea.addEventListener("dragleave", () => {
     restBGMDropArea.classList.remove("drag-over");
   });
 
-  //ローカルに「work,restの時間、セット数、音量」の保存-------------------------
+  //---ローカルに「work,restの時間、セット数、音量」の保存---
   const SETTINGS_STORAGE_KEY = "timer-setting";
 
   function saveSettings() {
@@ -349,7 +379,7 @@
       restBGM: restBGMSelect.value,
       setCount: setCount.value,
       volume: volumeSlider.value,
-    }
+    };
 
     localStorage.setItem(SETTINGS_STORAGE_KEY, JSON.stringify(settings));
   }
@@ -379,7 +409,7 @@
 
     setCount.value = settings.setCount ?? "1";
     volumeSlider.value = settings.volume ?? "0.5";
-    updateVolume(Number(volumeSlider.value),volumeValue);
+    updateVolume(Number(volumeSlider.value), volumeValue);
   }
 
   //-------------------------------------------------
@@ -423,21 +453,20 @@
 
   setCount.addEventListener("input", saveSettings);
 
-  //音量の操作
+  //---音量の操作---
   volumeSlider.addEventListener("input", () => {
     const volume = Number(volumeSlider.value);
     updateVolume(volume, volumeValue);
     saveSettings();
 
     if (isRunning && remainingTime > 4000) {
-    setCurrentModeVolume(currentMode, volume);
-  }
+      setCurrentModeVolume(currentMode, volume);
+    }
   });
-
 
   loadSettings();
   previewTime();
   updateVolume(Number(volumeSlider.value), volumeValue);
 }
 
-//Next 
+//Next
