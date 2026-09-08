@@ -326,28 +326,34 @@
     event.preventDefault();
     workBGMDropArea.classList.remove("drag-over");
 
-    const file = event.dataTransfer.files[0];
+    const files = event.dataTransfer.files;
 
-    if (!file) {
+    if (files.length === 0) {
       return;
     }
 
-    if (!file.type.startsWith("audio/")) {
-      alert("音声ファイルを選択してください");
-      return;
+    for (const file of files) {
+      if (!file.type.startsWith("audio/")) {
+        continue;
+      }
+
+      const isDuplicate = [...workBGMSelect.options].some((option) => {
+        return option.textContent === file.name;
+      });
+
+      if (isDuplicate) {
+        continue;
+      }
+
+      const fileUrl = URL.createObjectURL(file);
+      const option = document.createElement("option")
+  
+      option.value = fileUrl;
+      option.textContent = file.name;
+  
+      workBGMSelect.appendChild(option);
     }
 
-    const fileUrl = URL.createObjectURL(file);
-
-    const wasRunningWork = isrunning === true && currentMode === "work";
-
-    setWorkBGMSrc(fileUrl);
-
-    if (wasRunningWork === true) {
-      playWorkBGM();
-    }
-
-    workBGMDropArea.textContent = file.name;
   });
 
   //---休憩用BGMをドラッグ＆ドロップする時の処理---
