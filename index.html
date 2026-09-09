@@ -44,25 +44,32 @@
       />
 
       <!-- 設定画面 -->
-      <section id="setting-display" class="hidden">
+      <section id="setting-display" class=//"hidden">
         <p>作業時間</p>
         <div id="work-timer">
           <input id="hours-work" type="number" min="0" value="00" />時間
           <input id="minutes-work" type="number" min="0" value="00" />分
           <input id="seconds-work" type="number" min="0" value="00" />秒
         </div>
-        <div id="bgm-setting">
+        <div id="bgm-setting" class="bgm-setting">
           <p>作業時BGM</p>
           <select name="workBGM" id="work-bgm-select">
             <option value="workBGM/Forest.mp3">Forest</option>
             <option value="workBGM/yume.mp3">yume</option>
             <option value="workBGM/Jazz.mp3">jazz</option>
           </select>
-          <div id="work-bgm-drop-area" class="BGM-drop-field">
-            作業用BGMをここにドラッグ&ドロップ
-          </div>
+          <button id="work-bgm-add">追加</button>
+          <button id="rest-bgm-delete">削除</button>
         </div>
-
+        <div id="work-bgm-drop-area" class="BGM-drop-field hidden">
+          作業用BGMをここにドラッグ&ドロップ
+        </div>
+        <div id="work-bgm-delete" class="work-bgm-delete hidden">
+          <p>削除するBGMを選択</p>
+          <div id="work-bgm-delete-list"></div>
+          <button id="work-bgm-delete-confirm">選択した曲を削除</button>
+        </div>
+        
         <p>インターバル</p>
         <div id="rest-timer">
           <input id="hours-rest" type="number" min="0" value="00" />時間

@@ -35,6 +35,9 @@
   const workBGMSelect = document.getElementById("work-bgm-select");
   setWorkBGMSrc(workBGMSelect.value);
 
+  const workBGMAdd = document.getElementById("work-bgm-add");
+  const workBGMDelete = document.getElementById("work-bgm-delete");
+
   const restBGMSelect = document.getElementById("rest-bgm-select");
   setRestBGMSrc(restBGMSelect.value);
 
@@ -311,6 +314,10 @@
 
     saveSettings();
   });
+
+  workBGMAdd.addEventListener("click", () => {
+  workBGMDropArea.classList.toggle("hidden");
+});
 
   //---作業用BGMをドラッグ＆ドロップする時の処理---
   workBGMDropArea.addEventListener("dragover", (event) => {
